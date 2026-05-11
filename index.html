@@ -4,23 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iRhysBradbury</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0d0d;
-      --surface: #111111;
-      --border: #1f1f1f;
-      --green: #00ff88;
-      --green-dim: #00cc6a;
-      --grey: #555555;
-      --text: #cccccc;
-      --text-dim: #555555;
-      --font: 'Courier New', Courier, monospace;
+      --bg:         #0a0a0a;
+      --surface:    rgba(17, 24, 39, 0.8);
+      --border:     rgba(255,255,255,0.07);
+      --green:      #00e676;
+      --green-dim:  rgba(0,230,118,0.15);
+      --text:       #e2e8f0;
+      --text-muted: #64748b;
+      --font:       'Roboto', sans-serif;
+      --radius:     12px;
     }
 
     html, body {
-      height: 100%;
+      min-height: 100%;
       background: var(--bg);
       color: var(--text);
       font-family: var(--font);
@@ -32,228 +34,285 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      padding: 2rem 1.5rem;
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(0,230,118,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 100%, rgba(99,102,241,0.05) 0%, transparent 55%),
+        #0a0a0a;
     }
 
     main {
-      max-width: 680px;
+      max-width: 540px;
       width: 100%;
       margin: auto;
+      padding: 3rem 1.5rem;
       flex: 1;
     }
 
-    /* Scanline overlay */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-      z-index: 999;
-    }
-
-    /* Prompt header */
-    .prompt-line {
-      color: var(--green);
-      margin-bottom: 2.5rem;
-      font-size: 0.85rem;
-    }
-
-    .prompt-line .path { color: var(--green-dim); }
-    .prompt-line .cmd  { color: var(--text); }
-
-    /* Name */
-    h1 {
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
-      font-weight: normal;
-      color: var(--green);
-      letter-spacing: -0.5px;
-      margin-bottom: 0.25rem;
-    }
-
-    h1 .caret {
-      display: inline-block;
-      width: 0.6ch;
-      height: 1.1em;
-      background: var(--green);
-      vertical-align: text-bottom;
-      margin-left: 4px;
-      animation: blink 1.1s step-end infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
-
-    /* Role */
-    .role {
-      color: var(--text-dim);
-      font-size: 0.85rem;
-      margin-bottom: 2.5rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    /* Divider */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-
-    /* Section labels */
-    .label {
-      color: var(--green-dim);
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-
-    .label::before { content: '// '; color: var(--grey); }
-
-    /* Links / icon row */
-    .icon-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      align-items: center;
-    }
-
-    .icon-row a {
-      display: block;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      overflow: hidden;
+    /* ── Glass card ── */
+    .card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      opacity: 0.6;
-      transition: opacity 0.15s, border-color 0.15s;
+      border-radius: var(--radius);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    /* ── Header card ── */
+    .header-card {
+      padding: 1.75rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+
+    .avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      object-fit: cover;
       flex-shrink: 0;
     }
 
-    .icon-row a:hover {
-      opacity: 1;
-      border-color: var(--green);
+    .header-name {
+      font-size: 1.35rem;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.3px;
+      line-height: 1.2;
+      margin-bottom: 2px;
     }
 
-    .icon-row img {
+    .header-role {
+      font-size: 0.8rem;
+      color: var(--green);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      font-family: var(--font);
+      font-size: 0.68rem;
+      padding: 2px 10px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    .chip.green {
+      border-color: rgba(0,230,118,0.3);
+      color: var(--green);
+      background: rgba(0,230,118,0.07);
+    }
+
+    /* ── Tabbed card ── */
+    .tab-card {
+      overflow: hidden;
+    }
+
+    .tab-bar {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      padding: 0.85rem 0;
+      margin-right: 1.5rem;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      color: var(--text);
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0; right: 0;
+      height: 2px;
+      border-radius: 2px 2px 0 0;
+      background: var(--green);
+    }
+
+    /* ── Tab viewport ── */
+    .tab-viewport { overflow: hidden; }
+
+    .tab-track {
+      display: flex;
+      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-pane {
+      min-width: 100%;
+      padding: 1.5rem;
+    }
+
+    /* ── Profile rows ── */
+    .profile-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .profile-row:last-child { border-bottom: none; }
+
+    .profile-key {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+
+    .profile-val {
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .profile-val a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .profile-val a:hover { color: var(--green); }
+
+    /* ── Org avatars ── */
+    .org-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .org-link {
+      display: block;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      opacity: 0.55;
+      filter: grayscale(50%);
+      transition: opacity 0.2s, border-color 0.2s, filter 0.2s, transform 0.2s;
+    }
+
+    .org-link:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+      border-color: var(--green);
+      transform: scale(1.12);
+    }
+
+    .org-link img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: grayscale(40%);
-      transition: filter 0.15s;
     }
 
-    .icon-row a:hover img {
-      filter: grayscale(0%);
-    }
-
-    /* Status grid */
-    .status-grid {
-      display: grid;
-      grid-template-columns: max-content 1fr;
-      gap: 0.4rem 1.5rem;
-      font-size: 0.9rem;
-    }
-
-    .status-grid .key   { color: var(--text-dim); }
-    .status-grid .value { color: var(--text); }
-    .status-grid .value.online { color: var(--green); }
-
-    /* ASCII art */
-    .ascii {
-      color: var(--border);
-      font-size: 0.7rem;
-      line-height: 1.2;
-      white-space: pre;
-      user-select: none;
-      margin-bottom: 2.5rem;
-    }
-
-    /* Footer */
+    /* ── Footer ── */
     footer {
-      max-width: 680px;
-      width: 100%;
-      margin: 3rem auto 0;
-      color: var(--text-dim);
-      font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 1.5rem;
       display: flex;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
     }
   </style>
 </head>
 <body>
   <main>
 
-    <div class="ascii">
-╔══════════════════════════════════════╗
-║  iRhysBradbury.github.io  v1.0.0    ║
-╚══════════════════════════════════════╝</div>
-
-    <div class="prompt-line">
-      <span class="path">~/</span>&nbsp;<span class="cmd">whoami</span>
+    <!-- Header card -->
+    <div class="card header-card">
+      <img class="avatar" src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
+      <div>
+        <div class="header-name">iRhysBradbury</div>
+        <div class="header-role">Senior Software Engineer</div>
+        <div class="chips">
+          <span class="chip">🇬🇧 UTC</span>
+        </div>
+      </div>
     </div>
 
-    <h1>iRhysBradbury<span class="caret"></span></h1>
-    <p class="role">Senior Software Engineer</p>
-
-    <hr class="divider" />
-
-    <section>
-      <p class="label">contributed to</p>
-      <div class="icon-row">
-        <a href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener" title="LinkedIn">
-          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" style="background:#0a66c2;padding:7px;filter:invert(1) grayscale(0%);" />
-        </a>
-        <a href="https://github.com/iRhysBradbury" target="_blank" rel="noopener" title="iRhysBradbury">
-          <img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
-        </a>
-        <a href="https://github.com/ONSdigital" target="_blank" rel="noopener" title="ONSdigital">
-          <img src="https://github.com/ONSdigital.png" alt="ONSdigital" />
-        </a>
-        <a href="https://github.com/outworkers" target="_blank" rel="noopener" title="outworkers">
-          <img src="https://github.com/outworkers.png" alt="outworkers" />
-        </a>
-        <a href="https://github.com/otrl" target="_blank" rel="noopener" title="otrl">
-          <img src="https://github.com/otrl.png" alt="otrl" />
-        </a>
-        <a href="https://github.com/telegraph" target="_blank" rel="noopener" title="telegraph">
-          <img src="https://github.com/telegraph.png" alt="telegraph" />
-        </a>
-        <a href="https://github.com/ClearScore" target="_blank" rel="noopener" title="ClearScore">
-          <img src="https://github.com/ClearScore.png" alt="ClearScore" />
-        </a>
-        <a href="https://github.com/sky-uk" target="_blank" rel="noopener" title="sky-uk">
-          <img src="https://github.com/sky-uk.png" alt="sky-uk" />
-        </a>
-        <a href="https://github.com/NBCUDTC" target="_blank" rel="noopener" title="NBCUDTC">
-          <img src="https://github.com/NBCUDTC.png" alt="NBCUDTC" />
-        </a>
+    <!-- Tabbed card -->
+    <div class="card tab-card">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-index="0">Profile</button>
+        <button class="tab-btn" data-index="1">Contributed to</button>
       </div>
-    </section>
+      <div class="tab-viewport">
+        <div class="tab-track">
 
-    <hr class="divider" />
+          <!-- Profile pane -->
+          <div class="tab-pane">
+            <div class="profile-row">
+              <span class="profile-key">Role</span>
+              <span class="profile-val">Senior Software Engineer</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-key">Timezone</span>
+              <span class="profile-val">UTC</span>
+            </div>
+            <div class="profile-row">
+              <span class="profile-key">LinkedIn</span>
+              <span class="profile-val">
+                <a href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener">rhys-bradbury</a>
+              </span>
+            </div>
+          </div>
 
-    <section>
-      <p class="label">status</p>
-      <div class="status-grid">
-        <span class="key">Role</span>       <span class="value">Senior Software Engineer</span>
-        <span class="key">Timezone</span>   <span class="value">UTC</span>
+          <!-- Contributed to pane -->
+          <div class="tab-pane">
+            <div class="org-grid">
+              <a class="org-link" href="https://github.com/sky-uk" target="_blank" rel="noopener" title="sky-uk">
+                <img src="https://github.com/sky-uk.png" alt="sky-uk" />
+              </a>
+              <a class="org-link" href="https://github.com/ClearScore" target="_blank" rel="noopener" title="ClearScore">
+                <img src="https://github.com/ClearScore.png" alt="ClearScore" />
+              </a>
+              <a class="org-link" href="https://github.com/telegraph" target="_blank" rel="noopener" title="telegraph">
+                <img src="https://github.com/telegraph.png" alt="telegraph" />
+              </a>
+              <a class="org-link" href="https://github.com/otrl" target="_blank" rel="noopener" title="otrl">
+                <img src="https://github.com/otrl.png" alt="otrl" />
+              </a>
+              <a class="org-link" href="https://github.com/ONSdigital" target="_blank" rel="noopener" title="ONSdigital">
+                <img src="https://github.com/ONSdigital.png" alt="ONSdigital" />
+              </a>
+              <a class="org-link" href="https://github.com/outworkers" target="_blank" rel="noopener" title="outworkers">
+                <img src="https://github.com/outworkers.png" alt="outworkers" />
+              </a>
+              <a class="org-link" href="https://github.com/iRhysBradbury" target="_blank" rel="noopener" title="iRhysBradbury">
+                <img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
+              </a>
+            </div>
+          </div>
+
+        </div>
       </div>
-    </section>
-
-    <hr class="divider" />
+    </div>
 
   </main>
 
@@ -263,9 +322,27 @@
   </footer>
 
   <script>
-    // Fake a short build hash for flavour
-    const hash = Math.random().toString(36).slice(2, 9);
-    document.getElementById('hash').textContent = hash;
+    document.getElementById('hash').textContent = Math.random().toString(36).slice(2, 9);
+
+    const track = document.querySelector('.tab-track');
+    const tabs  = document.querySelectorAll('.tab-btn');
+    let current = 0;
+
+    function goTo(i) {
+      current = i;
+      track.style.transform = `translateX(-${i * 100}%)`;
+      tabs.forEach((t, idx) => t.classList.toggle('active', idx === i));
+    }
+
+    tabs.forEach(t => t.addEventListener('click', () => goTo(+t.dataset.index)));
+
+    let sx = 0;
+    const vp = document.querySelector('.tab-viewport');
+    vp.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+    vp.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0));
+    }, { passive: true });
   </script>
 </body>
 </html>
