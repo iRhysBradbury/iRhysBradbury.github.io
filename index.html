@@ -119,11 +119,42 @@
 
     .label::before { content: '// '; color: var(--grey); }
 
-    /* About */
-    .about p {
-      color: var(--text);
-      max-width: 55ch;
-      font-size: 0.95rem;
+    /* Links / icon row */
+    .icon-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .icon-row a {
+      display: block;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      opacity: 0.6;
+      transition: opacity 0.15s, border-color 0.15s;
+      flex-shrink: 0;
+    }
+
+    .icon-row a:hover {
+      opacity: 1;
+      border-color: var(--green);
+    }
+
+    .icon-row img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(40%);
+      transition: filter 0.15s;
+    }
+
+    .icon-row a:hover img {
+      filter: grayscale(0%);
     }
 
     /* Status grid */
@@ -179,9 +210,37 @@
 
     <hr class="divider" />
 
-    <section class="about">
-      <p class="label">about</p>
-      <p>Software engineer who builds things that work. Interested in clean systems, sharp tools, and code that doesn't need explaining.</p>
+    <section>
+      <p class="label">contributed to</p>
+      <div class="icon-row">
+        <a href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener" title="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" style="background:#0a66c2;padding:7px;filter:invert(1) grayscale(0%);" />
+        </a>
+        <a href="https://github.com/iRhysBradbury" target="_blank" rel="noopener" title="iRhysBradbury">
+          <img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
+        </a>
+        <a href="https://github.com/ONSdigital" target="_blank" rel="noopener" title="ONSdigital">
+          <img src="https://github.com/ONSdigital.png" alt="ONSdigital" />
+        </a>
+        <a href="https://github.com/outworkers" target="_blank" rel="noopener" title="outworkers">
+          <img src="https://github.com/outworkers.png" alt="outworkers" />
+        </a>
+        <a href="https://github.com/otrl" target="_blank" rel="noopener" title="otrl">
+          <img src="https://github.com/otrl.png" alt="otrl" />
+        </a>
+        <a href="https://github.com/telegraph" target="_blank" rel="noopener" title="telegraph">
+          <img src="https://github.com/telegraph.png" alt="telegraph" />
+        </a>
+        <a href="https://github.com/ClearScore" target="_blank" rel="noopener" title="ClearScore">
+          <img src="https://github.com/ClearScore.png" alt="ClearScore" />
+        </a>
+        <a href="https://github.com/sky-uk" target="_blank" rel="noopener" title="sky-uk">
+          <img src="https://github.com/sky-uk.png" alt="sky-uk" />
+        </a>
+        <a href="https://github.com/NBCUDTC" target="_blank" rel="noopener" title="NBCUDTC">
+          <img src="https://github.com/NBCUDTC.png" alt="NBCUDTC" />
+        </a>
+      </div>
     </section>
 
     <hr class="divider" />
@@ -189,9 +248,8 @@
     <section>
       <p class="label">status</p>
       <div class="status-grid">
-        <span class="key">location</span>   <span class="value">Earth</span>
-        <span class="key">role</span>       <span class="value">Senior Software Engineer</span>
-<span class="key">github</span>     <span class="value">github.com/iRhysBradbury</span>
+        <span class="key">Role</span>       <span class="value">Senior Software Engineer</span>
+        <span class="key">Timezone</span>   <span class="value">UTC</span>
       </div>
     </section>
 
