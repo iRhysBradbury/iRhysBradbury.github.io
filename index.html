@@ -1,1 +1,213 @@
-# rhysbradbury.github.io
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iRhysBradbury</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #111111;
+      --border: #1f1f1f;
+      --green: #00ff88;
+      --green-dim: #00cc6a;
+      --grey: #555555;
+      --text: #cccccc;
+      --text-dim: #555555;
+      --font: 'Courier New', Courier, monospace;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+
+    main {
+      max-width: 680px;
+      width: 100%;
+      margin: auto;
+      flex: 1;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Prompt header */
+    .prompt-line {
+      color: var(--green);
+      margin-bottom: 2.5rem;
+      font-size: 0.85rem;
+    }
+
+    .prompt-line .path { color: var(--green-dim); }
+    .prompt-line .cmd  { color: var(--text); }
+
+    /* Name */
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: normal;
+      color: var(--green);
+      letter-spacing: -0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    h1 .caret {
+      display: inline-block;
+      width: 0.6ch;
+      height: 1.1em;
+      background: var(--green);
+      vertical-align: text-bottom;
+      margin-left: 4px;
+      animation: blink 1.1s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* Role */
+    .role {
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 2rem 0;
+    }
+
+    /* Section labels */
+    .label {
+      color: var(--green-dim);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .label::before { content: '// '; color: var(--grey); }
+
+    /* About */
+    .about p {
+      color: var(--text);
+      max-width: 55ch;
+      font-size: 0.95rem;
+    }
+
+    /* Status grid */
+    .status-grid {
+      display: grid;
+      grid-template-columns: max-content 1fr;
+      gap: 0.4rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .status-grid .key   { color: var(--text-dim); }
+    .status-grid .value { color: var(--text); }
+    .status-grid .value.online { color: var(--green); }
+
+    /* ASCII art */
+    .ascii {
+      color: var(--border);
+      font-size: 0.7rem;
+      line-height: 1.2;
+      white-space: pre;
+      user-select: none;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Footer */
+    footer {
+      max-width: 680px;
+      width: 100%;
+      margin: 3rem auto 0;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+
+    <div class="ascii">
+╔══════════════════════════════════════╗
+║  iRhysBradbury.github.io  v1.0.0    ║
+╚══════════════════════════════════════╝</div>
+
+    <div class="prompt-line">
+      <span class="path">~/</span>&nbsp;<span class="cmd">whoami</span>
+    </div>
+
+    <h1>iRhysBradbury<span class="caret"></span></h1>
+    <p class="role">Senior Software Engineer</p>
+
+    <hr class="divider" />
+
+    <section class="about">
+      <p class="label">about</p>
+      <p>Software engineer who builds things that work. Interested in clean systems, sharp tools, and code that doesn't need explaining.</p>
+    </section>
+
+    <hr class="divider" />
+
+    <section>
+      <p class="label">status</p>
+      <div class="status-grid">
+        <span class="key">location</span>   <span class="value">Earth</span>
+        <span class="key">role</span>       <span class="value">Senior Software Engineer</span>
+<span class="key">github</span>     <span class="value">github.com/iRhysBradbury</span>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+  </main>
+
+  <footer>
+    <span>iRhysBradbury &copy; 2026</span>
+    <span>build: <span id="hash">--</span></span>
+  </footer>
+
+  <script>
+    // Fake a short build hash for flavour
+    const hash = Math.random().toString(36).slice(2, 9);
+    document.getElementById('hash').textContent = hash;
+  </script>
+</body>
+</html>
