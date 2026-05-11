@@ -1,351 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="custom">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>iRhysBradbury</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" />
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg:         #0a0a0a;
-      --surface:    rgba(17, 24, 39, 0.8);
-      --border:     rgba(255,255,255,0.07);
-      --green:      #00e676;
-      --green-dim:  rgba(0,230,118,0.15);
-      --text:       #e2e8f0;
-      --text-muted: #64748b;
-      --font:       'Roboto', sans-serif;
-      --radius:     12px;
-    }
-
-    html, body {
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font);
-      font-size: 15px;
-      line-height: 1.6;
+    [data-theme="custom"] {
+      --color-base-100: oklch(10% 0 0);
+      --color-base-200: oklch(13% 0.01 240);
+      --color-base-300: oklch(17% 0.01 240);
+      --color-base-content: oklch(90% 0 0);
+      --color-primary: oklch(82% 0.2 155);
+      --color-primary-content: oklch(10% 0 0);
+      --color-neutral: oklch(20% 0.01 240);
+      --color-neutral-content: oklch(70% 0 0);
+      --rounded-box: 0.75rem;
+      --rounded-btn: 0.5rem;
+      --rounded-badge: 1rem;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
       background:
-        radial-gradient(ellipse at 15% 0%, rgba(0,230,118,0.06) 0%, transparent 55%),
-        radial-gradient(ellipse at 85% 100%, rgba(99,102,241,0.05) 0%, transparent 55%),
-        #0a0a0a;
+        radial-gradient(ellipse at 15% 0%, rgba(0,230,118,0.05) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 100%, rgba(99,102,241,0.04) 0%, transparent 55%),
+        oklch(10% 0 0);
+      min-height: 100vh;
     }
 
-    main {
-      max-width: 540px;
-      width: 100%;
-      margin: auto;
-      padding: 3rem 1.5rem;
-      flex: 1;
+    .org-avatar {
+      transition: filter 0.2s, transform 0.2s;
     }
-
-    /* ── Glass card ── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-    }
-
-    /* ── Header card ── */
-    .header-card {
-      padding: 1.75rem;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: 2px solid var(--green);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .header-name {
-      font-size: 1.35rem;
-      font-weight: 400;
-      color: var(--text);
-      letter-spacing: -0.3px;
-      line-height: 1.2;
-      margin-bottom: 2px;
-    }
-
-    .header-role {
-      font-size: 0.8rem;
-      color: var(--green);
-      letter-spacing: 0.02em;
-      margin-bottom: 10px;
-    }
-
-    .chips {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      font-family: var(--font);
-      font-size: 0.68rem;
-      padding: 2px 10px;
-      border-radius: 100px;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-    }
-
-    .chip.green {
-      border-color: rgba(0,230,118,0.3);
-      color: var(--green);
-      background: rgba(0,230,118,0.07);
-    }
-
-    /* ── Tabbed card ── */
-    .tab-card {
-      overflow: hidden;
-    }
-
-    .tab-bar {
-      display: flex;
-      border-bottom: 1px solid var(--border);
-      padding: 0 1.5rem;
-    }
-
-    .tab-btn {
-      background: none;
-      border: none;
-      font-family: var(--font);
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      padding: 0.85rem 0;
-      margin-right: 1.5rem;
-      cursor: pointer;
-      position: relative;
-      transition: color 0.2s;
-      white-space: nowrap;
-    }
-
-    .tab-btn.active {
-      color: var(--text);
-    }
-
-    .tab-btn.active::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      left: 0; right: 0;
-      height: 2px;
-      border-radius: 2px 2px 0 0;
-      background: var(--green);
-    }
-
-    /* ── Tab viewport ── */
-    .tab-viewport { overflow: hidden; }
-
-    .tab-track {
-      display: flex;
-      transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .tab-pane {
-      min-width: 100%;
-      padding: 1.5rem;
-    }
-
-    /* ── Profile rows ── */
-    .profile-row {
-      display: flex;
-      align-items: baseline;
-      gap: 1rem;
-      padding: 0.55rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .profile-row:last-child { border-bottom: none; }
-
-    .profile-key {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      min-width: 80px;
-      flex-shrink: 0;
-    }
-
-    .profile-val {
-      font-size: 0.875rem;
-      color: var(--text);
-    }
-
-    .profile-val a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-
-    .profile-val a:hover { color: var(--green); }
-
-    /* ── Org avatars ── */
-    .org-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .org-link {
-      display: block;
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      opacity: 0.55;
+    .org-avatar .avatar {
+      transition: opacity 0.2s, filter 0.2s, transform 0.2s;
       filter: grayscale(50%);
-      transition: opacity 0.2s, border-color 0.2s, filter 0.2s, transform 0.2s;
+      opacity: 0.6;
     }
-
-    .org-link:hover {
-      opacity: 1;
+    .org-avatar:hover .avatar {
       filter: grayscale(0%);
-      border-color: var(--green);
+      opacity: 1;
       transform: scale(1.12);
-    }
-
-    .org-link img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 0.9rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-      color: var(--text-muted);
     }
   </style>
 </head>
-<body>
-  <main>
+<body class="flex flex-col">
 
-    <!-- Header card -->
-    <div class="card header-card">
-      <img class="avatar" src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
-      <div>
-        <div class="header-name">iRhysBradbury</div>
-        <div class="header-role">Senior Software Engineer</div>
-        <div class="chips">
-          <span class="chip">UTC</span>
-        </div>
-      </div>
-    </div>
+  <main class="flex-1 flex flex-col items-center justify-center px-4 py-12">
+    <div class="w-full max-w-sm flex flex-col gap-3">
 
-    <!-- Tabbed card -->
-    <div class="card tab-card">
-      <div class="tab-bar">
-        <button class="tab-btn active" data-index="0">Profile</button>
-        <button class="tab-btn" data-index="1">Contributions</button>
-      </div>
-      <div class="tab-viewport">
-        <div class="tab-track">
-
-          <!-- Profile pane -->
-          <div class="tab-pane">
-            <div class="profile-row">
-              <span class="profile-key">Role</span>
-              <span class="profile-val">Senior Software Engineer</span>
-            </div>
-            <div class="profile-row">
-              <span class="profile-key">Timezone</span>
-              <span class="profile-val">UTC</span>
-            </div>
-            <div class="profile-row">
-              <span class="profile-key">LinkedIn</span>
-              <span class="profile-val">
-                <a href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener">rhys-bradbury</a>
-              </span>
+      <!-- Header card -->
+      <div class="card bg-base-200 border border-white/[0.07] shadow-xl">
+        <div class="card-body p-5 flex-row items-center gap-4">
+          <div class="avatar">
+            <div class="w-14 rounded-full ring-2 ring-[#00e676] ring-offset-2 ring-offset-base-200">
+              <img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
             </div>
           </div>
-
-          <!-- Contributed to pane -->
-          <div class="tab-pane">
-            <div class="org-grid">
-              <a class="org-link" href="https://github.com/sky-uk" target="_blank" rel="noopener" title="sky-uk">
-                <img src="https://github.com/sky-uk.png" alt="sky-uk" />
-              </a>
-              <a class="org-link" href="https://github.com/ClearScore" target="_blank" rel="noopener" title="ClearScore">
-                <img src="https://github.com/ClearScore.png" alt="ClearScore" />
-              </a>
-              <a class="org-link" href="https://github.com/telegraph" target="_blank" rel="noopener" title="telegraph">
-                <img src="https://github.com/telegraph.png" alt="telegraph" />
-              </a>
-              <a class="org-link" href="https://github.com/otrl" target="_blank" rel="noopener" title="otrl">
-                <img src="https://github.com/otrl.png" alt="otrl" />
-              </a>
-              <a class="org-link" href="https://github.com/ONSdigital" target="_blank" rel="noopener" title="ONSdigital">
-                <img src="https://github.com/ONSdigital.png" alt="ONSdigital" />
-              </a>
-              <a class="org-link" href="https://github.com/outworkers" target="_blank" rel="noopener" title="outworkers">
-                <img src="https://github.com/outworkers.png" alt="outworkers" />
-              </a>
-              <a class="org-link" href="https://github.com/iRhysBradbury" target="_blank" rel="noopener" title="iRhysBradbury">
-                <img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" />
-              </a>
-              <a class="org-link" href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener" title="LinkedIn" style="background:#0a66c2;display:flex;align-items:center;justify-content:center;">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" style="width:55%;height:55%;filter:invert(1);object-fit:contain;" />
-              </a>
-            </div>
+          <div>
+            <h1 class="text-base font-medium text-base-content leading-snug">iRhysBradbury</h1>
+            <p class="text-xs text-[#00e676] mb-2 tracking-wide">Senior Software Engineer</p>
+            <span class="badge badge-outline badge-sm text-base-content/40 border-white/10 font-normal">UTC</span>
           </div>
-
         </div>
       </div>
-    </div>
 
+      <!-- Contributions card -->
+      <div class="card bg-base-200 border border-white/[0.07] shadow-xl">
+        <div class="card-body p-5">
+          <p class="text-xs text-base-content/40 uppercase tracking-widest mb-3">Contributions</p>
+          <div class="flex flex-wrap gap-3">
+            <a href="https://github.com/sky-uk" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="sky-uk">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/sky-uk.png" alt="sky-uk" /></div></div>
+            </a>
+            <a href="https://github.com/ClearScore" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="ClearScore">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/ClearScore.png" alt="ClearScore" /></div></div>
+            </a>
+            <a href="https://github.com/telegraph" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="telegraph">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/telegraph.png" alt="telegraph" /></div></div>
+            </a>
+            <a href="https://github.com/otrl" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="otrl">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/otrl.png" alt="otrl" /></div></div>
+            </a>
+            <a href="https://github.com/ONSdigital" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="ONSdigital">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/ONSdigital.png" alt="ONSdigital" /></div></div>
+            </a>
+            <a href="https://github.com/outworkers" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="outworkers">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/outworkers.png" alt="outworkers" /></div></div>
+            </a>
+            <a href="https://github.com/iRhysBradbury" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="iRhysBradbury">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10"><img src="https://github.com/iRhysBradbury.png" alt="iRhysBradbury" /></div></div>
+            </a>
+            <a href="https://www.linkedin.com/in/rhys-bradbury/" target="_blank" rel="noopener" class="tooltip tooltip-bottom org-avatar" data-tip="LinkedIn">
+              <div class="avatar"><div class="w-11 rounded-full border border-white/10 bg-[#0a66c2] flex items-center justify-center">
+                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn" class="w-6 h-6 invert" />
+              </div></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </main>
 
-  <footer>
+  <footer class="border-t border-white/[0.07] px-6 py-3 flex justify-between text-xs text-base-content/30">
     <span>iRhysBradbury &copy; 2026</span>
     <span>build: <span id="hash">--</span></span>
   </footer>
 
   <script>
     document.getElementById('hash').textContent = Math.random().toString(36).slice(2, 9);
-
-    const track = document.querySelector('.tab-track');
-    const tabs  = document.querySelectorAll('.tab-btn');
-    let current = 0;
-
-    function goTo(i) {
-      current = i;
-      track.style.transform = `translateX(-${i * 100}%)`;
-      tabs.forEach((t, idx) => t.classList.toggle('active', idx === i));
-    }
-
-    tabs.forEach(t => t.addEventListener('click', () => goTo(+t.dataset.index)));
-
-    let sx = 0;
-    const vp = document.querySelector('.tab-viewport');
-    vp.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
-    vp.addEventListener('touchend',   e => {
-      const dx = e.changedTouches[0].clientX - sx;
-      if (Math.abs(dx) > 40) goTo(dx < 0 ? Math.min(current + 1, tabs.length - 1) : Math.max(current - 1, 0));
-    }, { passive: true });
   </script>
 </body>
 </html>
